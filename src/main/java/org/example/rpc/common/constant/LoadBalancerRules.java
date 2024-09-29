@@ -1,4 +1,4 @@
-package org.example.rpc.common.constants;
+package org.example.rpc.common;
 
 /**
  * @description: 负债均衡
