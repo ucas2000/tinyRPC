@@ -1,4 +1,4 @@
-package org.example.rpc.common;
+package org.example.rpc.common.constant;
 
 /**
  * @description: 消息类型
