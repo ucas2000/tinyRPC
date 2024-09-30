@@ -3,7 +3,7 @@ package org.example.rpc.protocol;
 import java.io.Serializable;
 
 /**
- * @Description 存储元数据
+ * @Description 存储消息头
  * @Author: lyc
  * @Date: 2024/9/29
  */
@@ -14,7 +14,7 @@ public class MsgHeader implements Serializable {
     private byte status; // 状态
     private long requestId; // 请求 ID
     private int serializationLen;//序列化长度
-    private byte[] serializations;//序列化数据
+    private byte[] serializations;//序列化
     private int msgLen; // 数据长度
 
     public short getMagic() {
