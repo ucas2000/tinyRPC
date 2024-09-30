@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description
+ * @Description 服务调用方注解
  * @Author: lyc
  * @Date: 2024/9/30
  */

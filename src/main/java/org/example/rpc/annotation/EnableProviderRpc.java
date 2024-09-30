@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description
+ * @Description 开启服务提供方自动装配
  * @Author: lyc
  * @Date: 2024/9/30
  */
