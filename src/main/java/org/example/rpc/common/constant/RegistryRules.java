@@ -1,11 +1,9 @@
 package org.example.rpc.common.constant;
 
 /**
- * @description:
- * @Author: Xhy
- * @gitee: https://gitee.com/XhyQAQ
- * @copyright: B站: https://space.bilibili.com/152686439
- * @CreateTime: 2023-08-05 18:24
+ * @Description
+ * @Author: lyc
+ * @Date: 2024/9/26
  */
 public interface RegistryRules {
 

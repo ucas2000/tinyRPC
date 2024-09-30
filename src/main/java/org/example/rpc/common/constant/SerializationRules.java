@@ -5,8 +5,8 @@ package org.example.rpc.common.constant;
  * @Author: lyc
  * @Date: 2024/9/26
  */
-public enum  MsgStatus {
+public interface SerializationRules {
 
-    SUCCESS,
-    FAILED
+    String JSON = "json";
+    String hessian = "hessian";
 }

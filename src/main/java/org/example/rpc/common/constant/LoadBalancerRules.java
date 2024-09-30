@@ -1,11 +1,9 @@
 package org.example.rpc.common.constant;
 
 /**
- * @description: 负债均衡
- * @Author: Xhy
- * @gitee: https://gitee.com/XhyQAQ
- * @copyright: B站: https://space.bilibili.com/152686439
- * @CreateTime: 2023-07-28 22:13
+ * @Description
+ * @Author: lyc
+ * @Date: 2024/9/26
  */
 public interface LoadBalancerRules {
 

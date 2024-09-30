@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description 后缀
+ * @Description 后缀  标记类中的字段 从配置文件加载的字段
  * @Author: lyc
  * @Date: 2024/9/30
  */

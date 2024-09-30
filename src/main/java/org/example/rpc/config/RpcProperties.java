@@ -1,5 +1,11 @@
 package org.example.rpc.config;
 
+import org.example.rpc.annotation.PropertiesField;
+import org.example.rpc.annotation.PropertiesPrefix;
+import org.example.rpc.common.constant.RegistryRules;
+import org.example.rpc.common.constant.SerializationRules;
+import org.springframework.core.env.Environment;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +14,7 @@ import java.util.Map;
  * @Author: lyc
  * @Date: 2024/9/29
  */
+@PropertiesPrefix("rpc")
 public class RpcProperties {
     /**
      * netty 端口
