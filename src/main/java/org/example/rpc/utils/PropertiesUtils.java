@@ -17,7 +17,7 @@ public class PropertiesUtils {
      * @param o
      * @param environment
      */
-    public static void inti(Object o, Environment environment) {
+    public static void init(Object o, Environment environment) {
         final Class<?> clazz = o.getClass(); //对象的类信息
         //获取 @PropertiesPrefix 注解，检查其是否存在，并提取前缀。如果没有. 则在后面加上一个 .
         final PropertiesPrefix propertiesPrefix=clazz.getAnnotation(PropertiesPrefix.class);

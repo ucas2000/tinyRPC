@@ -1,5 +1,8 @@
 package org.example.rpc.annotation;
 
+import org.example.rpc.common.constant.FaultTolerantRules;
+import org.example.rpc.common.constant.LoadBalancerRules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
