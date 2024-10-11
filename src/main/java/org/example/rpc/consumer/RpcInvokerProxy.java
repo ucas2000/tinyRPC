@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description 代理
+ * @Description 代理对象
  * @Author: lyc
  * @Date: 2024/9/30
  */
