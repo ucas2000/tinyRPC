@@ -42,14 +42,25 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
     /**
      * 将所有服务实例添加到一致性哈希环上，并生成虚拟节点
      * 这里每次调用都需要构建哈希环是为了扩展(服务提供方)
-     * @param servers 服务实例列表
+     * @param discoveries 服务实例列表
      * @return 一致性哈希环
      */
     private TreeMap<Integer, ServiceMeta> makeConsistentHashRing(List<ServiceMeta> discoveries) {
         TreeMap<Integer, ServiceMeta> ring = new TreeMap<>();
         for(ServiceMeta instance : discoveries) {
-
+            for(int i=0;i<VIRTUAL_NODE_SIZE;i++) {
+                ring.put((buildServiceInstanceKey(instance) + VIRTUAL_NODE_SPLIT + i).hashCode(), instance);
+            }
         }
+        return ring;
+    }
+    /**
+     * 根据服务实例信息构建缓存键
+     * @param serviceMeta
+     * @return
+     */
+    private String buildServiceInstanceKey(ServiceMeta serviceMeta) {
 
+        return String.join(":", serviceMeta.getServiceAddr(), String.valueOf(serviceMeta.getServicePort()));
     }
 }
