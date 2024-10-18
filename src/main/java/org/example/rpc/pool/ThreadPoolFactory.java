@@ -1,4 +1,4 @@
-package org.example.rpc.poll;
+package org.example.rpc.pool;
 
 import io.netty.channel.ChannelHandlerContext;
 import org.example.rpc.common.RpcRequest;
@@ -21,8 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Author: lyc
  * @Date: 2024/9/29
  */
-public class ThreadPollFactory {
-    private static Logger logger = LoggerFactory.getLogger(ThreadPollFactory.class);
+public class ThreadPoolFactory {
+    private static Logger logger = LoggerFactory.getLogger(ThreadPoolFactory.class);
 
     private static ThreadPoolExecutor slowPoll;
 
@@ -52,7 +52,7 @@ public class ThreadPollFactory {
                 });
         startClearMonitor();
         }
-    private ThreadPollFactory() {}
+    private ThreadPoolFactory() {}
 
     public static void setRpcServiceMap(Map<String, Object> rpcMap){
         rpcServiceMap = rpcMap;

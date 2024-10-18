@@ -17,7 +17,7 @@ public class FilterConfig {
     private static FilterChain clientAfterFilterChain = new FilterChain();
 
     @SneakyThrows
-    public static FilterChain initServiceFilter() {
+    public static void initServiceFilter() {
         final ExtensionLoader extensionLoader = ExtensionLoader.getInstance();
         extensionLoader.loadExtension(ServiceAfterFilter.class);
         extensionLoader.loadExtension(ServiceBeforeFilter.class);
@@ -37,12 +37,8 @@ public class FilterConfig {
     public static FilterChain getServiceBeforeFilterChain(){
         return serviceBeforeFilterChain;
     }
-    public static FilterChain getServiceAfterFilterChain(){
-        return serviceAfterFilterChain;
-    }
-    public static FilterChain getClientBeforeFilterChain(){
-        return clientBeforeFilterChain;
-    }
+    public static FilterChain getServiceAfterFilterChain(){return serviceAfterFilterChain;}
+    public static FilterChain getClientBeforeFilterChain(){return clientBeforeFilterChain;}
     public static FilterChain getClientAfterFilterChain(){
         return clientAfterFilterChain;
     }

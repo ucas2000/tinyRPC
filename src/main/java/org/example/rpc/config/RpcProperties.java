@@ -19,43 +19,43 @@ public class RpcProperties {
     /**
      * netty 端口
      */
-    @PropertiesField
+
     private Integer port;
 
     /**
      * 注册中心地址
      */
-    @PropertiesField
+
     private String registerAddr;
 
     /**
      * 注册中心类型
      */
-    @PropertiesField
+
     private String registerType = RegistryRules.ZOOKEEPER;
 
     /**
      * 注册中心密码
      */
-    @PropertiesField
+
     private String registerPsw;
 
     /**
      * 序列化
      */
-    @PropertiesField
+
     private String serialization = SerializationRules.JSON;
 
     /**
      * 服务端额外配置数据
      */
-    @PropertiesField("service")
+
     private Map<String,Object> serviceAttachments = new HashMap<>();
 
     /**
      * 客户端额外配置数据
      */
-    @PropertiesField("client")
+
     private Map<String,Object> clientAttachments = new HashMap<>();
     static RpcProperties rpcProperties;
     public static RpcProperties getInstance(){

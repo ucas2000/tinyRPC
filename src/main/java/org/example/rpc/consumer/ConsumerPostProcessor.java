@@ -5,6 +5,8 @@ import org.example.rpc.Filter.client.ClientLogFilter;
 import org.example.rpc.annotation.RpcReference;
 import org.example.rpc.config.RpcProperties;
 import org.example.rpc.protocol.serialization.SerializationFactory;
+import org.example.rpc.registry.RegistryFactory;
+import org.example.rpc.router.LoadBalancerFactory;
 import org.example.rpc.utils.PropertiesUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

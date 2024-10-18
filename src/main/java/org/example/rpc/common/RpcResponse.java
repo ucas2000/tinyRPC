@@ -3,7 +3,7 @@ package org.example.rpc.common;
 import java.io.Serializable;
 
 /**
- * @Description 封装RPC调用的响应信息
+ * @Description 封装RPC调用的响应信息 相当于一个实体类
  * @Author: lyc
  * @Date: 2024/9/29
  */

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @Date: 2024/9/30
  */
 public class RpcConsumer {
-    private final Bootstrap bootstrap;
+    private final Bootstrap bootstrap;  //Netty 提供的 Bootstrap 类的实例，用于设置客户端的连接参数
     private final EventLoopGroup eventLoopGroup;
     private Logger logger = LoggerFactory.getLogger(RpcConsumer.class);
 
@@ -43,7 +43,9 @@ public class RpcConsumer {
      * 发送请求
      */
     public void sentRequest(RpcProtocol<RpcRequest> protocol, ServiceMeta serviceMetadata) throws Exception{
+        //确保有有效的服务地址和端口
         if(serviceMetadata!=null){
+            //使用 bootstrap 连接指定的服务地址和端口。调用 sync() 方法使当前线程等待连接完成，并返回一个 ChannelFuture 对象，表示连接的结果
             ChannelFuture future=bootstrap.connect(serviceMetadata.getServiceAddr(),serviceMetadata.getServicePort()).sync();
             future.addListener((ChannelFutureListener) arg0->{
                 if(future.isSuccess()){
@@ -54,7 +56,7 @@ public class RpcConsumer {
                     eventLoopGroup.shutdownGracefully();
                 }
             });
-            // 写入数据
+            // 如果连接成功，通过 future.channel() 获取通道，并使用 writeAndFlush(protocol) 方法发送 RPC 请求协议
             future.channel().writeAndFlush(protocol);
         }
     }

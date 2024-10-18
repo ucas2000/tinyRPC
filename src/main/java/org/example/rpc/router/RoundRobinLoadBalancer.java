@@ -4,6 +4,7 @@ import org.example.rpc.common.ServiceMeta;
 import org.example.rpc.config.RpcProperties;
 import org.example.rpc.registry.RegistryFactory;
 import org.example.rpc.registry.RegistryService;
+import org.example.rpc.spi.ExtensionLoader;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

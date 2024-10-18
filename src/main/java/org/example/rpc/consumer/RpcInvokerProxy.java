@@ -21,6 +21,7 @@ import org.springframework.util.ObjectUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,6 +46,7 @@ public class RpcInvokerProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 创建消息
         RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
         //构建消息头
         MsgHeader header = new MsgHeader();
@@ -104,11 +106,11 @@ public class RpcInvokerProxy implements InvocationHandler {
                 // 等待响应数据返回
                 rpcResponse = future.getPromise().get(future.getTimeout(), TimeUnit.MILLISECONDS);
                 // 如果有异常并且没有其他服务
-                if(rpcResponse.getException()!=null && otherServiceMeta.size() == 0){
-                    throw rpcResponse.getException();
-                }
                 if (rpcResponse.getException()!=null){
-                    throw rpcResponse.getException();
+                    if(otherServiceMeta.size() == 0){
+                        log.warn("RPC 调用失败且重试失败，异常信息: {}", rpcResponse.getException().getMessage());
+                        throw rpcResponse.getException();
+                    }
                 }
                 log.info("rpc 调用成功, serviceName: {}",serviceName);
                 try {
@@ -127,18 +129,50 @@ public class RpcInvokerProxy implements InvocationHandler {
                         return rpcResponse.getException();
                     // 故障转移
                     case Failover:
+                        long maxWaitTime = 1000; // 最大等待时间 1秒
+                        long waitTime = Math.min((long) Math.pow(10, count) * 2, maxWaitTime);
+                        try{
+                            Thread.sleep(waitTime); // 100毫秒的等待
+                        }catch (InterruptedException e1){
+                            Thread.currentThread().interrupt(); // 恢复中断状态
+                            throw new RuntimeException("重试被中断", e);
+                        }
                         log.warn("rpc 调用失败,第{}次重试,异常信息:{}",count,errorMsg);
                         count++;
-                        if (!ObjectUtils.isEmpty(otherServiceMeta)){
-                            final ServiceMeta next = otherServiceMeta.iterator().next();
-                            curServiceMeta = next;
-                            otherServiceMeta.remove(next);
+                        if (!ObjectUtils.isEmpty(otherServiceMeta)) {
+                            Iterator<ServiceMeta> iterator = otherServiceMeta.iterator();
+                            while (iterator.hasNext()) {
+                                ServiceMeta next = iterator.next();
+                                curServiceMeta = next; // 更新当前服务为下一个
+                                iterator.remove(); // 移除已尝试的服务
+
+                                try {
+                                    // 发送请求并处理响应
+                                    rpcConsumer.sentRequest(protocol, curServiceMeta);
+                                    rpcResponse = future.getPromise().get(future.getTimeout(), TimeUnit.MILLISECONDS);
+
+                                    // 检查响应是否有异常
+                                    if (rpcResponse.getException() != null) {
+                                        log.warn("尝试服务 {} 失败，异常信息: {}", curServiceMeta, rpcResponse.getException().getMessage());
+                                        continue; // 继续尝试下一个服务
+                                    }
+
+                                    log.info("rpc 调用成功, serviceName: {}", serviceName);
+                                    // 处理后续逻辑
+                                    FilterConfig.getClientAfterFilterChain().doFilter(filterData);
+                                    return rpcResponse.getData();
+                                } catch (Exception innerException) {
+                                    log.warn("调用服务 {} 失败，异常信息: {}", curServiceMeta, innerException.getMessage());
+                                    // 这里可以选择继续尝试下一个服务
+                                }
+                            }
                         }else {
                             final String msg = String.format("rpc 调用失败,无服务可用 serviceName: {%s}, 异常信息: {%s}", serviceName, errorMsg);
                             log.warn(msg);
                             throw new RuntimeException(msg);
                         }
                         break;
+
                     // 忽视这次错误
                     case Failsafe:
                         return null;

@@ -1,0 +1,2 @@
+roundRobin=org.example.rpc.router.RoundRobinLoadBalancer
+consistentHash=org.example.rpc.router.ConsistentHashLoadBalancer

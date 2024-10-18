@@ -3,8 +3,10 @@ package org.example.rpc.Filter.client;
 import org.example.rpc.Filter.ClientBeforeFilter;
 import org.example.rpc.Filter.FilterData;
 import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Logger;
 
 /**
  * @Description
@@ -12,7 +14,7 @@ import java.util.logging.Logger;
  * @Date: 2024/9/30
  */
 public class ClientLogFilter implements ClientBeforeFilter {
-    private Logger logger= LoggerFactory.getLogger(ClientLogFilter.class);
+    private Logger logger = LoggerFactory.getLogger(ClientLogFilter.class);
     @Override
     public void doFilter(FilterData filterData){
         logger.info(filterData.toString());

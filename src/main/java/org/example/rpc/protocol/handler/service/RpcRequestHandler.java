@@ -3,7 +3,7 @@ package org.example.rpc.protocol.handler.service;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.example.rpc.common.RpcRequest;
-import org.example.rpc.poll.ThreadPollFactory;
+import org.example.rpc.pool.ThreadPoolFactory;
 import org.example.rpc.protocol.RpcProtocol;
 
 /**
@@ -17,6 +17,6 @@ public class RpcRequestHandler extends SimpleChannelInboundHandler<RpcProtocol<R
     public RpcRequestHandler() {}
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcRequest> msg){
-        ThreadPollFactory.submitRequest(ctx,msg);
+        ThreadPoolFactory.submitRequest(ctx,msg);
     }
 }

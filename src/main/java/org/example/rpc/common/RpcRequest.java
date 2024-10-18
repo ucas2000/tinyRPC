@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @Description 封装客户端发出的远程调用请求
+ * @Description 封装客户端发出的远程调用请求 相当于一个实体类
  * @Author: lyc
  * @Date: 2024/9/29
  */

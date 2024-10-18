@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class RpcFuture<T> {
     private Promise<T> promise;
     private long timeout;
+
     public Promise<T> getPromise() {
         return promise;
     }

@@ -30,13 +30,13 @@ public @interface RpcReference {
 
     /**
      * 可选的负载均衡:consistentHash,roundRobin...
-     * {@link org.xhystudy.rpc.common.constants.LoadBalancerRules}
+     * {@link org.example.rpc.common.constant.LoadBalancerRules}
      * @return
      */
     String loadBalancer() default LoadBalancerRules.RoundRobin;
 
     /**可选的容错策略:failover,failFast,failsafe...
-     * {@link org.xhystudy.rpc.common.constants.FaultTolerantRules}
+     * {@link org.example.rpc.common.constant.FaultTolerantRules}
      * @return
      */
     String faultTolerant() default FaultTolerantRules.FailFast;
