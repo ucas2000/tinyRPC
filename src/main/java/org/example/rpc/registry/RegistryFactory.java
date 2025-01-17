@@ -3,7 +3,7 @@ package org.example.rpc.registry;
 import org.example.rpc.spi.ExtensionLoader;
 
 /**
- * @Description
+ * @Description 注册工厂
  * @Author: lyc
  * @Date: 2024/9/30
  */

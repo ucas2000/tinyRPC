@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * @Description
+ * @Description 客户端的日志拦截器
  * @Author: lyc
  * @Date: 2024/9/30
  */

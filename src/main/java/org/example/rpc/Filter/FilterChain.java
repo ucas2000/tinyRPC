@@ -20,6 +20,7 @@ public class FilterChain {
             addFilter((Filter) filter);
         }
     }
+
     public void doFilter(FilterData filterData){
         for(Filter filter:filters){
             filter.doFilter(filterData);

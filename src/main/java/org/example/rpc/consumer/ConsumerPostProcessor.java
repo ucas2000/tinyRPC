@@ -22,7 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
- * @Description
+ * @Description 服务消费方后置处理器
  * @Author: lyc
  * @Date: 2024/9/30
  */
@@ -53,7 +53,7 @@ public class ConsumerPostProcessor implements BeanPostProcessor , EnvironmentAwa
     }
 
     /**
-     * 代理层注入
+     * 代理层注入:通过反射和代理技术在 Spring Bean 初始化之前注入带有 @RpcReference 注解的字段
      * @param bean
      * @param beanName
      * @return

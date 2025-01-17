@@ -31,11 +31,13 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class RpcInvokerProxy implements InvocationHandler {
+
     private String serviceVersion;
     private long timeout;
     private String loadBalancerType;
     private String faultTolerantType;
     private long retryCount;
+
     public RpcInvokerProxy(String serviceVersion, long timeout,String faultTolerantType,String loadBalancerType,long retryCount) {
         this.serviceVersion = serviceVersion;
         this.timeout = timeout;

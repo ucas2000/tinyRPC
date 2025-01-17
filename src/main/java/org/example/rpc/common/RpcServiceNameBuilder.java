@@ -6,7 +6,7 @@ package org.example.rpc.common;
  * @Date: 2024/9/29
  */
 public class RpcServiceNameBuilder {
-    // key: 服务名 value: 服务提供方s
+    // key: 服务名 value: 服务提供方
     public static String buildServiceKey(String serviceName, String serviceVersion) {
         return String.join("$", serviceName, serviceVersion);
     }

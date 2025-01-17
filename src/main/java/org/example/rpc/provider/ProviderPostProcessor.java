@@ -42,7 +42,6 @@ import java.util.Map;
  */
 public class ProviderPostProcessor implements InitializingBean, BeanPostProcessor, EnvironmentAware {
     private Logger logger = LoggerFactory.getLogger(ProviderPostProcessor.class);
-
     RpcProperties rpcProperties;
 
     // 此处在linux环境下改为0.0.0.0
@@ -50,6 +49,9 @@ public class ProviderPostProcessor implements InitializingBean, BeanPostProcesso
 
     private final Map<String, Object> rpcServiceMap = new HashMap<>();
 
+    /*
+     Spring 会在所有属性设置完成后自动调用此方法。这个方法通常用于进行一些初始化操作，如启动后台线程、设置资源等。
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
 
@@ -68,11 +70,11 @@ public class ProviderPostProcessor implements InitializingBean, BeanPostProcesso
         FilterConfig.initServiceFilter();
         ThreadPoolFactory.setRpcServiceMap(rpcServiceMap);
     }
-
+    //服务端配置
     private void startRpcServer() throws InterruptedException {
         int serverPort = rpcProperties.getPort();
-        EventLoopGroup boss = new NioEventLoopGroup();
-        EventLoopGroup worker = new NioEventLoopGroup();
+        EventLoopGroup boss = new NioEventLoopGroup(); //接受客户端的连接
+        EventLoopGroup worker = new NioEventLoopGroup(); //处理客户端的读写操作
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(boss, worker)
@@ -89,11 +91,13 @@ public class ProviderPostProcessor implements InitializingBean, BeanPostProcesso
                                     .addLast(new ServiceAfterFilterHandler());
                         }
                     })
-                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);//设置子通道的参数
 
             ChannelFuture channelFuture = bootstrap.bind(this.serverAddress, serverPort).sync();
             logger.info("server addr {} started on port {}", this.serverAddress, serverPort);
             channelFuture.channel().closeFuture().sync();
+            //添加 JVM 关闭钩子（ShutdownHook）
+            //添加了一个 shutdownHook 来优雅地关闭 Netty 的事件循环组（boss 和 worker）
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
                 logger.info("ShutdownHook execute start...");
@@ -110,7 +114,15 @@ public class ProviderPostProcessor implements InitializingBean, BeanPostProcesso
     }
 
     /**
-     * 服务注册
+     * 服务注册:{
+         * 检查 Bean 是否有 @RpcService 注解。
+         * 获取服务的接口名称、版本信息等。
+         * 构建服务元数据（服务地址、端口、版本、名称等）。
+         * 将服务注册到注册中心。
+         * 将服务实例缓存到本地。
+         * 记录日志，并处理异常。
+     * }
+     *
      * @param bean
      * @param beanName
      * @return
@@ -150,6 +162,8 @@ public class ProviderPostProcessor implements InitializingBean, BeanPostProcesso
         return bean;
     }
 
+
+    //配置文件
     @Override
     public void setEnvironment(Environment environment) {
         RpcProperties properties = RpcProperties.getInstance();
