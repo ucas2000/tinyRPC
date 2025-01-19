@@ -44,7 +44,7 @@ public class PropertiesUtils {
             try{
                 field.setAccessible(true);
                 final Class<?> fieldType=field.getType();
-                //获取对应的属性值
+                //反射机制获取对应的属性值
                 final Object value=PropertyUtil.handle(environment, prefix + fieldValue, fieldType);
                 if(value == null){
                     continue;

@@ -22,7 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
- * @Description 服务消费方后置处理器
+ * @Description 服务消费方后置处理器，自动处理服务消费方的初始化和配置注入
  * @Author: lyc
  * @Date: 2024/9/30
  */
